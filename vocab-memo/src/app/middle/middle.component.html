@@ -1,0 +1,71 @@
+<div *ngIf="clicked">
+    <app-game-set-up 
+        [selectedForeignLangs]="selectedForeignLangs"
+        [selectedNativeLang]="selectedNativeLang"></app-game-set-up>
+</div>
+<div *ngIf="!clicked">
+    <div class="text-center">
+        <h3>Add & Select Language</h3>
+        <p>Add languages that you know (Min2) and (Max4). Then Select which is your native</p>
+        <label for="item-input">Add a Language</label> 
+        <input type="text" id="item-input" class="form-control" required [(ngModel)]="newLang">
+        <div *ngIf="!validInput" class="alert alert-danger">
+            Only Characters are Allowed in Input!
+        </div>
+        <div *ngIf="lengthCheck" class="alert alert-danger">
+            Language Name must be more than 3 Letters!
+        </div>
+        <div *ngIf="alreadyExist" class="alert alert-danger">
+            Language already Added!
+        </div>
+        <button (click)="addNewLang(newLang)" [disabled]="maxSizeReached">Add to Languages List</button>
+        <div *ngIf="maxSizeReached" class="alert alert-info">
+            Maximum 4 Languages Can Be Entered!
+        </div>
+        <div *ngIf="alreadySelected" class="alert alert-danger">
+            Same Language cannot be Native and Foreign!
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="list-group">
+                <h4 style="text-align: left;">Count</h4>
+                <h4 style="text-align: right;">Language</h4>
+                <a
+                    class="list-group-item"
+                    *ngFor="let lang of langs; let i=index">
+                    {{i+1}}. {{lang.name}}
+                    <button (click)="deleteLang(i);">Delete</button>
+                    <button (click)="selectNativeLang(i);">Select as Native</button>
+                    <button (click)="selectForeignLang(i);">Select as Foreign</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="text-center">
+        <div class="row">
+            <div class="col-xs-12">
+                <h4 *ngIf="nativeSelected">Selected Native Language is {{selectedNativeLang.name}}</h4>
+                <div *ngIf="foreignSelected">
+                    <div *ngFor="let foreLang of selectedForeignLangs; let j=index">
+                        <h4 > Selected Foreign Language is {{selectedForeignLangs[j].name}}</h4>
+                    </div>
+                    
+                </div>
+                <button
+                    class="btn btn-primary" 
+                    [disabled]="limitReached || !(nativeSelected && foreignSelected)"
+                    (click)="onTestStart()"
+                    >
+                    Start the Test
+                </button>
+                <hr>
+                <div *ngIf="limitReached" class="alert alert-info">
+                    Please add minimum 2 Languages!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

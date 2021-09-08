@@ -1,0 +1,17 @@
+label {
+  float: left;
+}
+
+span {
+  display: block;
+  overflow: hidden;
+  padding: 0px 4px 0px 6px;
+}
+
+input {
+  width: 100%;
+}
+
+button {
+  margin-left: 5px;
+}

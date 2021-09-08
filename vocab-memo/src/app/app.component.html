@@ -1,0 +1,7 @@
+<div class="center">
+  <app-middle 
+    (newLangEvent)="addNewLang($event)" 
+    [langs]="languages"
+    [alreadyExist]="alreadyAdded"
+    [limitReached]="isLimitReached"></app-middle>
+</div>

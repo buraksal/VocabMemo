@@ -1,0 +1,50 @@
+<div *ngIf="clicked">
+    <app-quiz [selectedNativeLang]="selectedNativeLang"
+                [selectedForeignLangs]="selectedForeignLangs"></app-quiz>
+</div>
+<div *ngIf="!clicked">
+    <div class="text-center">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2>Create Your Dictionary</h2>
+                <h4>Add Min(5) words of your native language with translations</h4>
+                <div>
+                    <label>Native Word in {{selectedNativeLang.name}}: </label>
+                    <input type="text" [(ngModel)]="natWord" required>
+                </div>
+                <div *ngFor="let foreLang of selectedForeignLangs; let i=index">
+                    <label>Foreign Word in {{selectedForeignLangs[i].name}}: </label>
+                    <input type="text" [(ngModel)]="foreWords[i]" required>
+                </div>
+                <hr>
+                <div *ngIf="!validInputs" class="alert alert-danger">
+                    Only Characters allowed in Words!
+                </div>
+                <button class="btn btn-primary" (click)="onSubmitWord()">Submit Word</button>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <div class="row">
+            <div class="col-xs-12">
+                <h4>Number/Native Word/Foreign Translations</h4>
+                <a
+                    class="list-group-item"
+                    *ngFor="let word of selectedNativeLang.forWords; let i=index">
+                    {{i+1}}/ {{selectedNativeLang.natWords[i]}}/ {{selectedNativeLang.forWords[i]}}   
+                    <button (click)="deleteWord(i);">Delete</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <button
+            class="btn btn-primary" 
+            [disabled]="!wordsAdded"
+            (click)="onGameStart()"
+            >
+            Start the Game
+        </button>
+    </div>
+    
+</div>

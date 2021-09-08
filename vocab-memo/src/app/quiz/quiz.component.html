@@ -1,0 +1,36 @@
+<div *ngIf="!isFinished">
+    <div class="text-center">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Quiz</h3>
+                <p>Give answer to <span style="font-weight:bold">{{selectedNativeLang.natWords.length}} Questions.</span> You have
+                    to translate native language word into each foreign ones.
+                </p>
+                <div class="quiz-progress progress">
+                    <div class="progress-bar progress-bar-striped active progress-bar-info" [style.width.%]="progressBarPercentage">
+                        {{questionNum}} of {{totalQuestionNum}}
+                    </div>
+                </div>
+                <div class="question">
+                    <h5>Translate <span style="font-weight: bold;">{{quizWord}} in {{selectedNativeLang.name}}</span> into the following languages:</h5>
+                    <div *ngFor="let lang of selectedForeignLangs; let i=index">
+                        <label>in {{selectedForeignLangs[i].name}} : </label>
+                        <input type="text" [(ngModel)]="foreignGuesses[i]" required>
+                    </div>
+                    <div class="text-align: right">
+                        <button class="btn btn-primary" (click)="onSubmitAnswer()">Submit Answer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="isFinished">
+    <app-score-display 
+        [answers]="answers"
+        [selectedNativeLang]="selectedNativeLang"
+        [askOrder]="askOrder"
+        [askedWords]="askedWords"
+        [selectedForeignLangs]="selectedForeignLangs"
+        ></app-score-display>
+</div>

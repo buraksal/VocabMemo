@@ -1,0 +1,66 @@
+<div class="text-center" *ngIf="!returnClicked">
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Quiz Result</h3>
+            <span class="result-indicate bg-info"> {{percentage}}% Percentage </span>
+            <div>
+                <span class="result-indicate bg-success"> {{right}} Right </span>
+                <span class="result-indicate bg-danger"> {{wrong}} Wrong </span>
+            </div>
+            <div class="score-table">
+                <table class="table table-bordered text-center table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="text-center" rowspan="2">#</th>
+                            <th class="text-center" colspan="0">{{selectedNativeLang.name}}</th>
+                            <th class="text-center"
+                                scope="col" 
+                                colspan="2"
+                                *ngFor="let langs of selectedForeignLangs; index as i">
+                                {{langs.name}}
+                            </th>
+                            <th class="text-center" rowspan="2">Result</th>
+                        </tr>
+                        <tr>
+                            <th class="text-center">Native</th>
+                            <ng-container *ngFor="let lang of selectedForeignLangs">
+                                <th class="text-center">Your Answer</th>
+                                <th class="text-center">Corect Translation</th>
+                            </ng-container>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let langs of askOrder; index as i">
+                            <tr>
+                                <td rowspan="2"> {{i+1}} </td>
+                                <td rowspan="2">{{selectedNativeLang.natWords[askOrder[i]]}}</td>
+                                <ng-container *ngFor="let guesses of selectedForeignLangs; index as j">
+                                    <td >
+                                        {{answers[i][j]}}
+                                    </td>
+                                    <td>
+                                        {{selectedNativeLang.forWords[askOrder[i]][j]}}
+                                    </td>
+                                </ng-container>
+                                <td rowspan="2" *ngIf="resultArrayLanguage[i]" class="bg-success">Well Done</td>
+                                <td rowspan="2" *ngIf="!resultArrayLanguage[i]" class="bg-danger">Try Again</td>
+                            </tr>
+                            <tr>
+                                <ng-container *ngFor="let lang of selectedForeignLangs; index as j">
+                                    <td colspan="2" class="bg-danger" *ngIf="!resultArrayWhole[i][j]">X</td>
+                                    <td colspan="2" class="bg-success" *ngIf="resultArrayWhole[i][j]">✔</td>
+                                </ng-container>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn btn-md btn-orange" (click)="onReturnButton()">Back To Vocabulaty List</button>
+        </div>
+    </div>
+</div>
+<div *ngIf="returnClicked">
+    <app-game-set-up 
+        [selectedForeignLangs]="selectedForeignLangs"
+        [selectedNativeLang]="selectedNativeLang"></app-game-set-up>
+</div>
